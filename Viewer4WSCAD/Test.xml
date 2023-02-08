@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<data>
+	<figure>
+		<type>line</type>
+		<a>-1,5; 3,4</a>
+		<b>2,2; 5,7</b>
+		<color>127; 255; 255; 255</color>
+	</figure>
+	<figure>
+		<type>circle</type>
+		<center>0; 0</center>
+		<radius>15</radius>
+		<filled>false</filled>
+		<color>127; 255; 0; 0</color>
+	</figure>
+	<figure>
+		<type>triangle</type>
+		<a>-15; -20</a>
+		<b>15; -20,3</b>
+		<c>0; 21</c>
+		<filled>true</filled>
+		<color>127; 255; 0; 255</color>
+	</figure>
+</data>
