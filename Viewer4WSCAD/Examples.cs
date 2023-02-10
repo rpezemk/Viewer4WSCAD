@@ -117,5 +117,39 @@ namespace Viewer4WSCAD
 				}
 			]";
 
+        public static string UnimplementedFigureExample =
+                    @"[
+				{
+					""type"": ""blah"",
+					""a"": ""-1,5; 3,4"",
+					""b"": ""2,2; 5,7"",
+					""color"": ""127; 255; 255; 255""
+				},
+				{
+					""type"": ""LOL"",
+					""center"": ""0; 0"",
+					""radius"": 15.0,
+					""filled"": false,
+					""color"": ""127; 255; 0; 0""
+				},
+				{
+					""type"": ""circle"",
+					""center"": ""300; 300"",
+					""radius"": 10.0,
+					""filled"": true,
+					""color"": ""255; 0; 0; 255""
+				},
+				{
+					""type"": ""rectangle"",
+					""a"": ""0; 0"",
+					""b"": ""-100; 100"",
+					""filled"": true,
+					""color"": ""127; 255; 0; 255""
+				}
+			]";
+
+
+
+
     }
 }

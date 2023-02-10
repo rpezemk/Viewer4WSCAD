@@ -10,7 +10,7 @@ using System.Windows.Media;
 
 namespace Viewer4WSCAD.Controls
 {
-    internal class PointsToPointCollectionConv : IMultiValueConverter
+    public class PointsToPointCollectionConv : IMultiValueConverter
     {
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
@@ -45,10 +45,8 @@ namespace Viewer4WSCAD.Controls
                 return new Thickness();
             if (values[1] == null)
                 return new Thickness();
-
             try
             {
-
                 Thickness margin = new Thickness
                 {
                     Left = (double)values[0],
@@ -73,7 +71,7 @@ namespace Viewer4WSCAD.Controls
 
 
 
-    internal class MakeYReversed : IMultiValueConverter
+    public class MakeYReversed : IMultiValueConverter
     {
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
@@ -81,10 +79,8 @@ namespace Viewer4WSCAD.Controls
                 return null;
             if (values[0].GetType() != typeof(double) || values[0].GetType() != typeof(double))
                 return null;
-
             double x = (double)values[0];
             double height = (double)values[1];
-
             return height - x;
         }
 
@@ -98,13 +94,12 @@ namespace Viewer4WSCAD.Controls
 
 
 
-    internal class Color2BrushConv : IValueConverter
+    public class Color2BrushConv : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value == null)
                 return null;
-
             if (value.GetType() != typeof(Color))
                 return value;
             var c = (Color)value;

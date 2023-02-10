@@ -9,8 +9,10 @@ using System.Windows.Shapes;
 
 namespace Viewer4WSCAD.Types.Geometry
 {
-
-    internal class Line : AFigure
+    /// <summary>
+    /// Class for Line figure.
+    /// </summary>
+    public class Line : AFigure
     {
         public Line(Root root) : base(root)
         {

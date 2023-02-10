@@ -14,6 +14,9 @@ using Viewer4WSCAD.Types.Geometry;
 
 namespace Viewer4WSCAD.Deserializers
 {
+    /// <summary>
+    /// Class impementing deserialization for JSON input data.
+    /// </summary>
     internal class JsonDeserializer : IDeserializer
     {
         public List<Root> GetGenericFigures(string json) => JsonConvert.DeserializeObject<List<Root>>(json);

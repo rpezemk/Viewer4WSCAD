@@ -5,7 +5,10 @@ using System.Windows;
 
 namespace Viewer4WSCAD.Types.Geometry
 {
-    internal class Rectangle : AFigure
+    /// <summary>
+    /// Class for Rectangle figure.
+    /// </summary>
+    public class Rectangle : AFigure
     {
         public Rectangle(Root root) : base(root)
         {

@@ -3,6 +3,9 @@ using System.Xml.Serialization;
 
 namespace Viewer4WSCAD.Helpers
 {
+    /// <summary>
+    /// Serialization helpers
+    /// </summary>
     internal static class SerializationHelpers
     {
         public static string XmlSerializeObject<T>(this T toSerialize)

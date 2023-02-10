@@ -16,27 +16,35 @@ using Viewer4WSCAD.Types.Geometry;
 
 namespace Viewer4WSCAD.ViewModel
 {
-    internal class VM_Main : BindableBase
+    public class VM_Main : BindableBase
     {
         public VM_Main()
         {
             LoadFileCmd = new DelegateCommand(LoadFile);
             LoadMyExampleCmd = new DelegateCommand(LoadMyExample);
             LoadWSCADExampleCmd = new DelegateCommand(LoadWSCADExample);
+            LoadMyUnimplementedExampleCmd = new DelegateCommand(LoadUnimplemented);
             Figures = new ObservableCollection<AFigure>();
+        }
+
+        private void LoadUnimplemented()
+        {
+            var json = Examples.UnimplementedFigureExample;
+            Figures = new ObservableCollection<AFigure>(GeometryHelpers.GetFigures(json, new JsonDeserializer()));
+            ShowCmd.Execute();
         }
 
         private void LoadWSCADExample()
         {
             var json = Examples.WSCADExample;
-            Figures = new ObservableCollection<AFigure>(GH.GetFigures(json, new JsonDeserializer()));
+            Figures = new ObservableCollection<AFigure>(GeometryHelpers.GetFigures(json, new JsonDeserializer()));
             ShowCmd.Execute();
         }
 
         private void LoadMyExample()
         {
             var json = Examples.MyExample;
-            Figures = new ObservableCollection<AFigure>(GH.GetFigures(json, new JsonDeserializer()));
+            Figures = new ObservableCollection<AFigure>(GeometryHelpers.GetFigures(json, new JsonDeserializer()));
             ShowCmd.Execute();
         }
 
@@ -57,18 +65,20 @@ namespace Viewer4WSCAD.ViewModel
                 return;
             }
             var fileData = File.ReadAllText(dialog.FileName);
-            Figures = new ObservableCollection<AFigure>(GH.GetFigures(fileData, deserializer));
+            Figures = new ObservableCollection<AFigure>(GeometryHelpers.GetFigures(fileData, deserializer));
             ShowCmd.Execute();//bound in xaml!
         }
 
         private DelegateCommand loadWSCADExampleCmd;
         private DelegateCommand loadMyExampleCmd;
+        private DelegateCommand loadUnimplementedMyExampleCmd;
         private DelegateCommand loadFileCmd;
         private DelegateCommand showCmd;
         private ObservableCollection<AFigure> figures;
         public DelegateCommand LoadFileCmd { get => loadFileCmd; set => SetProperty(ref loadFileCmd, value); }
         public DelegateCommand LoadWSCADExampleCmd { get => loadWSCADExampleCmd; set => SetProperty(ref loadWSCADExampleCmd, value); }
         public DelegateCommand LoadMyExampleCmd { get => loadMyExampleCmd; set => SetProperty(ref loadMyExampleCmd, value); }
+        public DelegateCommand LoadMyUnimplementedExampleCmd { get => loadUnimplementedMyExampleCmd; set => SetProperty(ref loadUnimplementedMyExampleCmd, value); }
         public DelegateCommand ShowCmd { get => showCmd; set => SetProperty(ref showCmd, value); }
         public ObservableCollection<AFigure> Figures { get => figures; set => SetProperty(ref figures, value); }
     }

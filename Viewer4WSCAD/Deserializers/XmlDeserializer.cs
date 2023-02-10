@@ -6,6 +6,9 @@ using Viewer4WSCAD.Types;
 
 namespace Viewer4WSCAD.Deserializers
 {
+    /// <summary>
+    /// Class impementing deserialization for XML input data.
+    /// </summary>
     internal class XmlDeserializer : IDeserializer
     {
         public List<Root> GetGenericFigures(string xml) => SerializationHelpers.XmlDeserializeObject<List<Root>>(xml);

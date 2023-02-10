@@ -22,6 +22,7 @@
                 <MenuItem Header="Examples">
                     <MenuItem Header="Load WSCAD example" Command="{Binding LoadWSCADExampleCmd}"/>
                     <MenuItem Header="Load my example" Command="{Binding LoadMyExampleCmd}"/>
+                    <MenuItem Header="Load my unimplemented example" Command="{Binding LoadMyUnimplementedExampleCmd}"/>
                 </MenuItem>
             </MenuItem>
         </Menu>

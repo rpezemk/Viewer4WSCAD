@@ -1,0 +1,116 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:classes="clr-namespace:Viewer4WSCAD.Types.Geometry"
+                    xmlns:helpers="clr-namespace:Viewer4WSCAD.Controls">
+
+    <helpers:MarginConverter x:Key="marginConv"/>
+    <helpers:PointsToPointCollectionConv x:Key="abc"/>
+    <helpers:MakeYReversed x:Key="yRev"/>
+    <helpers:Color2BrushConv x:Key="c2b"/>
+
+
+    <DataTemplate DataType="{x:Type classes:Line}">
+
+        <Border BorderThickness="0" BorderBrush="Blue" VerticalAlignment="Center" HorizontalAlignment="Center">
+
+            <Line StrokeThickness="1"   Stroke="{Binding Color, Converter={StaticResource ResourceKey=c2b}}"
+                                X1="{Binding A.X}" X2="{Binding B.X}"
+                                Y1="{Binding A.Y}" Y2="{Binding B.Y}"/>
+        </Border>
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type classes:Circle}">
+        <Border   BorderThickness="0" BorderBrush="Blue" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <Ellipse StrokeThickness="1" Width="{Binding Diameter}" Height="{Binding Diameter}" Stroke="{Binding Color, Converter={StaticResource ResourceKey=c2b}}">
+                <Ellipse.Style>
+                    <Style TargetType="{x:Type Ellipse}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsFilled}" Value="True">
+                                <Setter Property="Fill" Value="{Binding Color, Converter={StaticResource ResourceKey=c2b}}"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding IsFilled}" Value="False">
+                                <Setter Property="Fill" Value="Transparent"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Ellipse.Style>
+                <Ellipse.Margin>
+                    <MultiBinding Converter="{StaticResource marginConv}">
+                        <Binding Path="Boundaries[0]"/>
+                        <Binding Path="Boundaries[3]"/>
+                    </MultiBinding>
+                </Ellipse.Margin>
+            </Ellipse>
+        </Border>
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type classes:Triangle}">
+        <Polygon StrokeThickness="1" Stroke="{Binding Color, Converter={StaticResource ResourceKey=c2b}}"  >
+            <Polygon.Style>
+                <Style TargetType="{x:Type Polygon}">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsFilled}" Value="True">
+                            <Setter Property="Fill" Value="{Binding Color, Converter={StaticResource ResourceKey=c2b}}"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding IsFilled}" Value="False">
+                            <Setter Property="Fill" Value="Transparent"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Polygon.Style>
+            <Polygon.Points>
+                <MultiBinding Converter="{StaticResource abc}">
+                    <Binding Path="A"/>
+                    <Binding Path="B"/>
+                    <Binding Path="C"/>
+                </MultiBinding>
+            </Polygon.Points>
+        </Polygon>
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type classes:Rectangle}">
+        <Polygon StrokeThickness="1" Stroke="{Binding Color, Converter={StaticResource ResourceKey=c2b}}"  >
+            <Polygon.Style>
+                <Style TargetType="{x:Type Polygon}">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsFilled}" Value="True">
+                            <Setter Property="Fill" Value="{Binding Color, Converter={StaticResource ResourceKey=c2b}}"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding IsFilled}" Value="False">
+                            <Setter Property="Fill" Value="Transparent"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Polygon.Style>
+            <Polygon.Points>
+                <MultiBinding Converter="{StaticResource abc}">
+                    <Binding Path="A"/>
+                    <Binding Path="B"/>
+                    <Binding Path="C"/>
+                    <Binding Path="D"/>
+                </MultiBinding>
+            </Polygon.Points>
+        </Polygon>
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type classes:UnimplementedFigure}">
+        <Grid>
+            <Polygon StrokeThickness="1" Stroke="Red"  >
+                <Polygon.Points>
+                    <Point X="-4" Y="-4"/>
+                    <Point X="4" Y="4"/>
+                </Polygon.Points>
+            </Polygon>
+            <Polygon StrokeThickness="1" Stroke="Red"  >
+                <Polygon.Points>
+                    <Point X="-4" Y="4"/>
+                    <Point X="4" Y="-4"/>
+                </Polygon.Points>
+            </Polygon>
+            <Polygon StrokeThickness="1" Stroke="Red"  >
+                <Polygon.Points>
+                    <Point X="-10" Y="10"/>
+                    <Point X="10" Y="10"/>
+                    <Point X="10" Y="-10"/>
+                    <Point X="-10" Y="-10"/>
+                </Polygon.Points>
+            </Polygon>
+        </Grid>
+    </DataTemplate>
+</ResourceDictionary>

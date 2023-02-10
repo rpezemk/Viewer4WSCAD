@@ -5,7 +5,10 @@ using Viewer4WSCAD.Helpers;
 
 namespace Viewer4WSCAD.Types.Geometry
 {
-    internal class Triangle : AFigure
+    /// <summary>
+    /// Class for Triangle figure.
+    /// </summary>
+    public class Triangle : AFigure
     {
         public Triangle(Root root) : base(root)
         {
@@ -26,6 +29,6 @@ namespace Viewer4WSCAD.Types.Geometry
         public Point B { get; set; }
         public Point C { get; set; }
         public bool IsFilled { get; set; }
-        public override List<double> Boundaries => new List<double>() { MH.Min(A.X, B.X, C.X), MH.Max(A.Y, B.Y, C.Y), MH.Max(A.X, B.X, C.X), MH.Min(A.Y, B.Y, C.Y) };
+        public override List<double> Boundaries => new List<double>() { MathHelpers.Min(A.X, B.X, C.X), MathHelpers.Max(A.Y, B.Y, C.Y), MathHelpers.Max(A.X, B.X, C.X), MathHelpers.Min(A.Y, B.Y, C.Y) };
     }
 }

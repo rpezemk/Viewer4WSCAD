@@ -9,6 +9,9 @@ using Viewer4WSCAD.Types.Geometry;
 
 namespace Viewer4WSCAD.Types
 {
+    /// <summary>
+    /// Class for data element deserialized from text (JSON/XML)
+    /// </summary>
     public class Root
     {
         public string type { get; set; }

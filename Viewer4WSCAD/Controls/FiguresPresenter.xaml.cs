@@ -41,7 +41,7 @@ namespace Viewer4WSCAD.Controls
         {
             if (Figures == null)
                 return;
-            var bounds = GH.GetBounds(Figures.ToList());
+            var bounds = GeometryHelpers.GetBounds(Figures.ToList());
             LeftMargin = Math.Max(0, -bounds[0]);
             BottomMargin = Math.Max(0, -bounds[3]);
         }

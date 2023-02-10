@@ -10,6 +10,9 @@ using Prism.Mvvm;
 
 namespace Viewer4WSCAD.Types.Geometry
 {
+    /// <summary>
+    /// abstract class for figure
+    /// </summary>
     public abstract class AFigure : BindableBase
     {
         private Color color;

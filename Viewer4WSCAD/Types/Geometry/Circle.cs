@@ -4,7 +4,10 @@ using System.Windows;
 
 namespace Viewer4WSCAD.Types.Geometry
 {
-    internal class Circle : AFigure
+    /// <summary>
+    /// Class for Circle figure.
+    /// </summary>
+    public class Circle : AFigure
     {
         public Circle(Root root) : base(root)
         {
