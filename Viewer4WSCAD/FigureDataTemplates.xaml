@@ -1,14 +1,13 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:classes="clr-namespace:Viewer4WSCAD.Types.Geometry"
-                    xmlns:helpers="clr-namespace:Viewer4WSCAD.Controls">
+                    xmlns:controls="clr-namespace:Viewer4WSCAD.Controls">
 
-    <helpers:MarginConverter x:Key="marginConv"/>
-    <helpers:PointsToPointCollectionConv x:Key="abc"/>
-    <helpers:MakeYReversed x:Key="yRev"/>
-    <helpers:Color2BrushConv x:Key="c2b"/>
-
-
+    <controls:MarginConverter x:Key="marginConv"/>
+    <controls:PointsToPointCollectionConv x:Key="abc"/>
+    <controls:MakeYReversed x:Key="yRev"/>
+    <controls:Color2BrushConv x:Key="c2b"/>
+    
     <DataTemplate DataType="{x:Type classes:Line}">
 
         <Border BorderThickness="0" BorderBrush="Blue" VerticalAlignment="Center" HorizontalAlignment="Center">
