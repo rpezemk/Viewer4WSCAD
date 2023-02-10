@@ -1,0 +1,1 @@
+﻿public override UIElement GetUIElement(PMatrix t) => new Polygon() { Points = new System.Windows.Media.PointCollection() { t * A, t *B }, Fill = new SolidColorBrush(Color) };

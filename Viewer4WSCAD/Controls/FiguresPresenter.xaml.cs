@@ -14,7 +14,6 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using Viewer4WSCAD.Events;
 using Viewer4WSCAD.Helpers;
 using Viewer4WSCAD.Types.Geometry;
 
@@ -28,24 +27,54 @@ namespace Viewer4WSCAD.Controls
         public FiguresPresenter()
         {
             InitializeComponent();
-            RulersVisibility = true;
-            //MyEvents.RefreshSub.Subscribe(Refresh);
+            if (Figures == null)
+                Figures = new ObservableCollection<AFigure>();
+            Figures.CollectionChanged += Figures_CollectionChanged;
+        }
+
+        private void Figures_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            Refresh();
         }
 
         private void Refresh()
         {
-            PMatrix neutralM = new PMatrix();
-            MyCanvas.Children.Clear();
             if (Figures == null)
                 return;
-            foreach(var figure in Figures)
-            {
-                MyCanvas.Children.Add(figure));
-            }
-
-
-
+            var bounds = GH.GetBounds(Figures.ToList());
+            LeftMargin = Math.Max(0, -bounds[0]);
+            BottomMargin = Math.Max(0, -bounds[3]);
         }
+
+
+
+
+        public double LeftMargin
+        {
+            get { return (double)GetValue(LeftMarginProperty); }
+            set { SetValue(LeftMarginProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for LeftMargin.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty LeftMarginProperty =
+            DependencyProperty.Register("LeftMargin", typeof(double), typeof(FiguresPresenter), new PropertyMetadata(default));
+
+
+
+        public double BottomMargin
+        {
+            get { return (double)GetValue(BottomMarginProperty); }
+            set { SetValue(BottomMarginProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for BottomMargin.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty BottomMarginProperty =
+            DependencyProperty.Register("BottomMargin", typeof(double), typeof(FiguresPresenter), new PropertyMetadata(default));
+
+
+
+
+
 
         public Point OriginOffset
         {
@@ -69,12 +98,6 @@ namespace Viewer4WSCAD.Controls
         // Using a DependencyProperty as the backing store for Scale.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty ScaleProperty =
             DependencyProperty.Register("Scale", typeof(double), typeof(FiguresPresenter), new PropertyMetadata(default));
-
-
-
-
-
-
 
 
         public DelegateCommand ShowCmd
@@ -103,22 +126,14 @@ namespace Viewer4WSCAD.Controls
             DependencyProperty.Register("Figures", typeof(ObservableCollection<AFigure> ), typeof(FiguresPresenter), new PropertyMetadata(default));
 
 
-
-
-
-        public bool RulersVisibility
-        {
-            get { return (bool)GetValue(RulersVisibilityProperty); }
-            set { SetValue(RulersVisibilityProperty, value); }
-        } 
-
-        // Using a DependencyProperty as the backing store for RulersVisibility.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty RulersVisibilityProperty =
-            DependencyProperty.Register("RulersVisibility", typeof(bool), typeof(FiguresPresenter), new PropertyMetadata(default));
-
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             ShowCmd = new DelegateCommand(Refresh);
+        }
+
+        private void Canvas_Loaded(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

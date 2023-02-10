@@ -8,9 +8,9 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Xml.Linq;
-using Viewer4WSCAD.BusinessLogic;
-using Viewer4WSCAD.Events;
+using Viewer4WSCAD.Deserializers;
 using Viewer4WSCAD.Helpers;
 using Viewer4WSCAD.Types.Geometry;
 
@@ -21,31 +21,24 @@ namespace Viewer4WSCAD.ViewModel
         public VM_Main()
         {
             LoadFileCmd = new DelegateCommand(LoadFile);
+            LoadMyExampleCmd = new DelegateCommand(LoadMyExample);
+            LoadWSCADExampleCmd = new DelegateCommand(LoadWSCADExample);
             Figures = new ObservableCollection<AFigure>();
-            //Figures.Add(new Circle() { Center = new System.Windows.Point(100, 100), Color = System.Windows.Media.Color.FromArgb(120, 0, 0, 0), IsFilled = true, Radius = 50 });
         }
 
-        private void Refresh()
+        private void LoadWSCADExample()
         {
-            MyEvents.RefreshSub.Publish();
+            var json = Examples.WSCADExample;
+            Figures = new ObservableCollection<AFigure>(GH.GetFigures(json, new JsonDeserializer()));
+            ShowCmd.Execute();
         }
 
-        private double scaleLog;
-
-        public double ScaleLog
+        private void LoadMyExample()
         {
-            get { return scaleLog; }
-            set { SetProperty(ref scaleLog, value); ScaleLin = MathHelpers.Log2Lin(scaleLog); }
+            var json = Examples.MyExample;
+            Figures = new ObservableCollection<AFigure>(GH.GetFigures(json, new JsonDeserializer()));
+            ShowCmd.Execute();
         }
-
-        private double scaleLin;
-
-        public double ScaleLin
-        {
-            get { return scaleLin; }
-            set { SetProperty(ref scaleLin, value); }
-        }
-
 
         private void LoadFile()
         {
@@ -53,28 +46,31 @@ namespace Viewer4WSCAD.ViewModel
             dialog.Filter = "json files (*.json)|*.json|xml files (*.xml)|*.xml";
             if (dialog.ShowDialog() == false)
                 return;
-            JsonDeserializer deserializer = new JsonDeserializer();
-
-            var json = File.ReadAllText(dialog.FileName);
-            var roots = deserializer.GetFigures(json);
-
-            Figures.Clear();
-            foreach(var root in roots)
+            IDeserializer deserializer;
+            if (Path.GetExtension(dialog.FileName) == ".json")
+                deserializer = new JsonDeserializer();
+            else if(Path.GetExtension(dialog.FileName) == ".xml")
+                deserializer = new XmlDeserializer();
+            else
             {
-                var fig = GeometryHelper.GetFigure(root);
-                Figures.Add(fig);
+                MessageBox.Show("nieprawidłose rozszerzenie pliku!");
+                return;
             }
-
+            var fileData = File.ReadAllText(dialog.FileName);
+            Figures = new ObservableCollection<AFigure>(GH.GetFigures(fileData, deserializer));
+            ShowCmd.Execute();//bound in xaml!
         }
 
+        private DelegateCommand loadWSCADExampleCmd;
+        private DelegateCommand loadMyExampleCmd;
         private DelegateCommand loadFileCmd;
         private DelegateCommand showCmd;
         private ObservableCollection<AFigure> figures;
-
         public DelegateCommand LoadFileCmd { get => loadFileCmd; set => SetProperty(ref loadFileCmd, value); }
+        public DelegateCommand LoadWSCADExampleCmd { get => loadWSCADExampleCmd; set => SetProperty(ref loadWSCADExampleCmd, value); }
+        public DelegateCommand LoadMyExampleCmd { get => loadMyExampleCmd; set => SetProperty(ref loadMyExampleCmd, value); }
         public DelegateCommand ShowCmd { get => showCmd; set => SetProperty(ref showCmd, value); }
         public ObservableCollection<AFigure> Figures { get => figures; set => SetProperty(ref figures, value); }
-
     }
 
 

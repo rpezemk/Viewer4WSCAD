@@ -7,10 +7,8 @@ using System.Windows;
 using System.Windows.Media;
 using Viewer4WSCAD.Types.Geometry;
 
-namespace Viewer4WSCAD.BusinessLogic
+namespace Viewer4WSCAD.Types
 {
-
-    // Root myDeserializedClass = JsonConvert.DeserializeObject<List<Root>>(myJsonResponse);
     public class Root
     {
         public string type { get; set; }
